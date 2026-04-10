@@ -44,9 +44,7 @@ export async function searchTracksFromQueries(
   accessToken: string,
   limit = 25,
 ): Promise<SpotifyRawTrack[]> {
-  const results = await Promise.all(
-    queries.map((q) => searchSpotifyTracks(q, accessToken, 8)),
-  );
+  const results = await Promise.all(queries.map((q) => searchSpotifyTracks(q, accessToken, 8)));
 
   const allTracks = results.flat();
   const uniqueTracks = removeDuplicateTracks(allTracks);

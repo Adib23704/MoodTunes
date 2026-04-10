@@ -3,10 +3,7 @@ import type { EmotionScore, LlmMoodResult } from "@/types";
 
 const hf = new InferenceClient(process.env.HUGGINGFACE_API_KEY ?? "");
 
-const LLM_MODELS = [
-  "Qwen/Qwen2.5-7B-Instruct",
-  "mistralai/Mistral-7B-Instruct-v0.3",
-];
+const LLM_MODELS = ["Qwen/Qwen2.5-7B-Instruct", "mistralai/Mistral-7B-Instruct-v0.3"];
 
 function buildPrompt(userText: string, emotions: EmotionScore[]): string {
   const topEmotions = emotions

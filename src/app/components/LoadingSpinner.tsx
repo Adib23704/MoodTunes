@@ -2,9 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import type { LoadingSpinnerProps } from "@/types";
-
-export default function LoadingSpinner({ message = "Loading..." }: LoadingSpinnerProps) {
+export default function LoadingSpinner({ message = "Loading..." }: { message?: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-16">
       <div className="relative w-32 h-32 mb-8">

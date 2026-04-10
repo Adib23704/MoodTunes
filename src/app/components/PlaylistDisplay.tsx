@@ -3,7 +3,37 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Clock, ExternalLink, Music } from "lucide-react";
 import Image from "next/image";
-import type { PlaylistDisplayProps } from "@/types";
+
+interface LegacyPlaylist {
+  mood: string;
+  tracks: {
+    id: string;
+    name: string;
+    artist: string;
+    album: string;
+    image: string | null;
+    external_url: string | null;
+    duration_ms: number;
+    popularity: number;
+  }[];
+  method: string;
+  note: string;
+}
+
+interface LegacyMoodAnalysis {
+  mood: string;
+  secondaryMood: string | null;
+  confidence: number;
+  intensity: number;
+  context: string;
+  musicStyles: string[];
+  method: string;
+}
+
+interface PlaylistDisplayProps {
+  playlist: LegacyPlaylist;
+  moodAnalysis: LegacyMoodAnalysis;
+}
 
 const MOOD_COLORS: Record<string, string> = {
   happy: "from-yellow-400 to-orange-500",
@@ -55,16 +85,15 @@ export default function PlaylistDisplay({ playlist, moodAnalysis }: PlaylistDisp
       transition={{ duration: 0.5 }}
       className="max-w-5xl mx-auto p-4 sm:p-6"
     >
-      {/* Mood Analysis Display */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className={`bg-gradient-to-r ${moodColor} text-white p-4 sm:p-6 rounded-xl mb-6 relative overflow-hidden shadow-lg`}
+        className={`bg-linear-to-r ${moodColor} text-white p-4 sm:p-6 rounded-xl mb-6 relative overflow-hidden shadow-lg`}
       >
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative z-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-            <div className="flex-grow">
+            <div className="grow">
               <h3 className="text-2xl sm:text-3xl font-bold mb-2 flex items-center gap-2">
                 {moodEmoji}
                 Detected Mood:{" "}
@@ -93,7 +122,7 @@ export default function PlaylistDisplay({ playlist, moodAnalysis }: PlaylistDisp
                 )}
               </div>
             </div>
-            <div className="hidden sm:block text-right flex-shrink-0">
+            <div className="hidden sm:block text-right shrink-0">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -115,7 +144,6 @@ export default function PlaylistDisplay({ playlist, moodAnalysis }: PlaylistDisp
         </div>
       </motion.div>
 
-      {/* Playlist Header */}
       <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4 sm:p-6 mb-6">
         <div className="flex flex-col sm:flex-row items-center justify-between text-center sm:text-left">
           <div>
@@ -129,7 +157,6 @@ export default function PlaylistDisplay({ playlist, moodAnalysis }: PlaylistDisp
         </div>
       </div>
 
-      {/* Tracks List */}
       <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
         <AnimatePresence>
           {playlist.tracks.map((track, index) => (
@@ -143,7 +170,7 @@ export default function PlaylistDisplay({ playlist, moodAnalysis }: PlaylistDisp
               <div className="hidden sm:block text-center text-gray-400 text-sm w-8">
                 {index + 1}
               </div>
-              <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 shrink-0">
                 {track.image ? (
                   <Image
                     src={track.image}
@@ -158,7 +185,7 @@ export default function PlaylistDisplay({ playlist, moodAnalysis }: PlaylistDisp
                   </div>
                 )}
               </div>
-              <div className="flex-grow min-w-0">
+              <div className="grow min-w-0">
                 <h4 className="font-semibold text-gray-800 truncate">{track.name}</h4>
                 <p className="text-gray-600 text-sm truncate">{track.artist}</p>
                 <p className="text-sm text-gray-500 truncate hidden md:block">{track.album}</p>
@@ -187,7 +214,6 @@ export default function PlaylistDisplay({ playlist, moodAnalysis }: PlaylistDisp
         </AnimatePresence>
       </div>
 
-      {/* Playlist Stats */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

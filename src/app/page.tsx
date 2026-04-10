@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import MoodInput from "@/components/MoodInput";
 import PlaylistDisplay from "@/components/PlaylistDisplay";
-import type { MoodAnalysis, Playlist } from "@/types";
+import type { GenerateResponse } from "@/types";
 
 const MOOD_BACKGROUNDS: Record<string, string> = {
   happy: "from-yellow-200 via-orange-200 to-pink-200",
@@ -20,51 +20,70 @@ const MOOD_BACKGROUNDS: Record<string, string> = {
   default: "from-purple-50 to-pink-50",
 };
 
+function mapToLegacyPlaylist(data: GenerateResponse) {
+  return {
+    mood: data.mood.summary.toLowerCase().split(" ")[0],
+    tracks: data.playlist.tracks,
+    method: data.playlist.method,
+    note: data.mood.description,
+  };
+}
+
+function mapToLegacyMoodAnalysis(data: GenerateResponse) {
+  const topEmotion = data.emotions[0]?.label ?? "calm";
+  return {
+    mood: topEmotion,
+    secondaryMood: data.emotions[1]?.label ?? null,
+    confidence: data.emotions[0]?.score ?? 0.5,
+    intensity: Math.round((data.emotions[0]?.score ?? 0.5) * 10),
+    context: data.mood.description,
+    musicStyles: data.playlist.queries.slice(0, 5),
+    method: data.playlist.method,
+  };
+}
+
 export default function Home() {
-  const [playlist, setPlaylist] = useState<Playlist | null>(null);
-  const [moodAnalysis, setMoodAnalysis] = useState<MoodAnalysis | null>(null);
+  const [result, setResult] = useState<GenerateResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentMood, setCurrentMood] = useState<string>("default");
 
   useEffect(() => {
-    if (moodAnalysis?.mood) {
-      setCurrentMood(moodAnalysis.mood);
+    if (result?.emotions[0]) {
+      const topEmotion = result.emotions[0].label;
+      const emotionToMood: Record<string, string> = {
+        joy: "happy",
+        sadness: "sad",
+        anger: "angry",
+        love: "romantic",
+        fear: "calm",
+        excitement: "energetic",
+        nostalgia: "nostalgic",
+        amusement: "party",
+      };
+      setCurrentMood(emotionToMood[topEmotion] ?? "default");
     }
-  }, [moodAnalysis]);
+  }, [result]);
 
   const handleMoodSubmit = async (moodText: string): Promise<void> => {
     setIsLoading(true);
     setError(null);
-    setPlaylist(null);
-    setMoodAnalysis(null);
+    setResult(null);
 
     try {
-      const moodResponse = await fetch("/api/analyze-mood", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: moodText }),
       });
 
-      if (!moodResponse.ok) {
-        throw new Error("Failed to analyze mood");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error ?? "Failed to generate playlist");
       }
 
-      const moodData = await moodResponse.json();
-      setMoodAnalysis(moodData.analysis);
-
-      const playlistResponse = await fetch("/api/generate-playlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mood: moodData.analysis.mood }),
-      });
-
-      if (!playlistResponse.ok) {
-        throw new Error("Failed to generate playlist");
-      }
-
-      const playlistData = await playlistResponse.json();
-      setPlaylist(playlistData.playlist);
+      const data: GenerateResponse = await response.json();
+      setResult(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unexpected error occurred");
     } finally {
@@ -73,9 +92,11 @@ export default function Home() {
   };
 
   const background = MOOD_BACKGROUNDS[currentMood] ?? MOOD_BACKGROUNDS.default;
+  const legacyPlaylist = result ? mapToLegacyPlaylist(result) : null;
+  const legacyMoodAnalysis = result ? mapToLegacyMoodAnalysis(result) : null;
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${background} transition-all duration-1000`}>
+    <div className={`min-h-screen bg-linear-to-br ${background} transition-all duration-1000`}>
       <Header />
 
       <main className="container mx-auto px-4 py-12">
@@ -103,11 +124,11 @@ export default function Home() {
             </motion.div>
           )}
 
-          {playlist && !isLoading && moodAnalysis && (
-            <PlaylistDisplay playlist={playlist} moodAnalysis={moodAnalysis} />
+          {legacyPlaylist && !isLoading && legacyMoodAnalysis && (
+            <PlaylistDisplay playlist={legacyPlaylist} moodAnalysis={legacyMoodAnalysis} />
           )}
 
-          {!playlist && !isLoading && !error && (
+          {!result && !isLoading && !error && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -117,7 +138,7 @@ export default function Home() {
               <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto">
                 <p className="text-xl mb-4">
                   Tell us how you&apos;re feeling and we&apos;ll create the perfect playlist for
-                  you! 🎵
+                  you!
                 </p>
                 <p className="text-sm opacity-75">
                   Try phrases like &quot;I&apos;m feeling happy&quot;, &quot;I need some calm

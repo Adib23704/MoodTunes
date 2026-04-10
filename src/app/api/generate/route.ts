@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import type { GenerateResponse, SpotifyTrack } from "@/types";
 import { analyzeEmotions } from "@/utils/emotionAnalyzer";
 import { generateFallbackResult, generateKeywordEmotions } from "@/utils/fallback";
