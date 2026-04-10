@@ -39,7 +39,7 @@
       },
       "suspicious": {
         "noExplicitAny": "warn",
-        "noConsole": "warn",
+        "noConsole": "off",
         "noArrayIndexKey": "warn",
         "noControlCharactersInRegex": "off"
       },

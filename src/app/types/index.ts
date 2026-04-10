@@ -1,48 +1,13 @@
-// ── Mood System ──
-
-export type PrimaryMood =
-  | "happy"
-  | "sad"
-  | "energetic"
-  | "calm"
-  | "romantic"
-  | "angry"
-  | "nostalgic"
-  | "party";
-
-export type SecondaryMood = PrimaryMood | "anxious" | "excited" | "frustrated";
-
-export type MoodType = PrimaryMood | SecondaryMood;
-
-// ── HuggingFace Raw Types ──
-
 export interface EmotionScore {
   label: string;
   score: number;
 }
 
-export interface SentimentScore {
-  label: string;
-  score: number;
+export interface LlmMoodResult {
+  summary: string;
+  queries: string[];
+  description: string;
 }
-
-// ── Mood Analysis ──
-
-export type AnalysisMethod = "huggingface-emotion-analysis" | "fallback-enhanced-keywords";
-
-export interface MoodAnalysis {
-  mood: PrimaryMood;
-  secondaryMood: SecondaryMood | null;
-  confidence: number;
-  intensity: number;
-  context: string;
-  musicStyles: string[];
-  method: AnalysisMethod;
-  rawEmotions?: EmotionScore[];
-  rawSentiment?: SentimentScore[];
-}
-
-// ── Spotify ──
 
 export interface SpotifyTrack {
   id: string;
@@ -50,7 +15,6 @@ export interface SpotifyTrack {
   artist: string;
   album: string;
   image: string | null;
-  preview_url: string | null;
   external_url: string | null;
   duration_ms: number;
   popularity: number;
@@ -70,35 +34,22 @@ export interface SpotifyRawTrack {
   popularity: number;
 }
 
-export interface Playlist {
-  mood: string;
-  tracks: SpotifyTrack[];
-  method: string;
-  note: string;
+export interface TokenCache {
+  token: string;
+  expiresAt: number;
 }
 
-// ── API Responses ──
-
-export interface AnalyzeMoodResponse {
-  success: true;
-  analysis: {
-    mood: PrimaryMood;
-    secondaryMood: SecondaryMood | null;
-    confidence: number;
-    intensity: number;
-    context: string;
-    musicStyles: string[];
-    method: AnalysisMethod;
-    debug: {
-      rawEmotions: EmotionScore[];
-      rawSentiment: SentimentScore[];
-    };
+export interface GenerateResponse {
+  emotions: EmotionScore[];
+  mood: {
+    summary: string;
+    description: string;
   };
-}
-
-export interface GeneratePlaylistResponse {
-  success: true;
-  playlist: Playlist;
+  playlist: {
+    tracks: SpotifyTrack[];
+    queries: string[];
+    method: "llm-generated" | "fallback-keyword";
+  };
 }
 
 export interface ApiErrorResponse {
@@ -106,43 +57,7 @@ export interface ApiErrorResponse {
   details?: string;
 }
 
-// ── Component Props ──
-
 export interface MoodInputProps {
   onMoodSubmit: (text: string) => Promise<void>;
   isLoading: boolean;
-}
-
-export interface PlaylistDisplayProps {
-  playlist: Playlist;
-  moodAnalysis: MoodAnalysis;
-}
-
-export interface LoadingSpinnerProps {
-  message?: string;
-}
-
-// ── Internal Utilities ──
-
-export interface MoodSearchStrategy {
-  primaryQueries: string[];
-  genreQueries: string[];
-  artistQueries: string[];
-  playlistQueries: string[];
-}
-
-export interface MoodKeywords {
-  keywords: string[];
-  phrases: string[];
-  weight: number;
-}
-
-export interface MoodFilterKeywords {
-  include: string[];
-  exclude: string[];
-}
-
-export interface TokenCache {
-  token: string;
-  expiresAt: number;
 }
