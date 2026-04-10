@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 import type { AmbientBackgroundProps } from "@/types";
 
 const EMOTION_COLORS: Record<string, string> = {
@@ -32,9 +32,7 @@ const DEFAULT_COLORS = [
 export default function AmbientBackground({ emotions }: AmbientBackgroundProps) {
   const colors = useMemo(() => {
     if (emotions.length === 0) return DEFAULT_COLORS;
-    return emotions.slice(0, 3).map(
-      (e) => EMOTION_COLORS[e.label] ?? "rgba(139, 92, 246, 0.1)",
-    );
+    return emotions.slice(0, 3).map((e) => EMOTION_COLORS[e.label] ?? "rgba(139, 92, 246, 0.1)");
   }, [emotions]);
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 import type { SmartPromptsProps } from "@/types";
 
 const PROMPTS_BY_TIME: Record<string, string[]> = {

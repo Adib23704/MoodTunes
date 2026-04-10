@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { Send, Mic, MicOff } from "lucide-react";
 import { motion } from "framer-motion";
-import type { MoodInputProps } from "@/types";
-import SmartPrompts from "@/components/SmartPrompts";
+import { Mic, MicOff, Send } from "lucide-react";
+import { useCallback, useState } from "react";
 import RecentMoods, { saveRecentMood } from "@/components/RecentMoods";
+import SmartPrompts from "@/components/SmartPrompts";
+import type { MoodInputProps } from "@/types";
 
 const getSpeechRecognition = (): (new () => SpeechRecognition) | null => {
   if (typeof window === "undefined") return null;
@@ -104,9 +104,7 @@ export default function MoodInput({
   return (
     <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-8">
       <div className="text-center">
-        <h1 className="text-5xl sm:text-6xl font-bold text-white tracking-tight mb-3">
-          MoodTunes
-        </h1>
+        <h1 className="text-5xl sm:text-6xl font-bold text-white tracking-tight mb-3">MoodTunes</h1>
         <p className="text-slate-400 text-lg">How are you feeling?</p>
       </div>
 

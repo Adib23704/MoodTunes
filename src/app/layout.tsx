@@ -81,8 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "@context": "https://schema.org",
               "@type": "WebApplication",
               name: "MoodTunes",
-              description:
-                "AI-powered music discovery based on your emotional state.",
+              description: "AI-powered music discovery based on your emotional state.",
               url: "https://moodtunes.adibdev.me",
               applicationCategory: "MultimediaApplication",
               operatingSystem: "Web Browser",

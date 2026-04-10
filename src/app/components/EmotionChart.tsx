@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 import type { EmotionChartProps } from "@/types";
 
 const CHART_SIZE = 280;
@@ -33,7 +33,7 @@ export default function EmotionChart({ emotions }: EmotionChartProps) {
 
   const polygonPath = useMemo(() => {
     if (points.length === 0) return "";
-    return points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") + " Z";
+    return `${points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ")} Z`;
   }, [points]);
 
   const gridRings = [0.25, 0.5, 0.75, 1.0];
