@@ -39,6 +39,20 @@
   background: rgba(139, 92, 246, 0.5);
 }
 
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-overlay {
+  animation: shimmer 3.5s ease-in-out 1.2s infinite;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

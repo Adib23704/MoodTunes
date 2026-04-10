@@ -87,7 +87,7 @@ export default function Home() {
             >
               <div className="glass rounded-2xl p-6 max-w-md text-center">
                 <p className="text-red-400 font-medium mb-2">Something went wrong</p>
-                <p className="text-slate-400 text-sm mb-4">{error}</p>
+                <p className="text-slate-300 text-sm mb-4">{error}</p>
                 <button
                   type="button"
                   onClick={() => {
@@ -110,29 +110,44 @@ export default function Home() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="sticky top-0 z-20 bg-[#0a0a1a]/80 backdrop-blur-lg border-b border-white/5 py-3 px-4">
+              <div className="sticky top-0 z-20 bg-[#0a0a1a]/80 backdrop-blur-lg border-b border-white/5 py-3 px-3 sm:px-4">
                 <MoodInput onMoodSubmit={handleMoodSubmit} isLoading={isLoading} compact />
               </div>
 
-              <main className="max-w-6xl mx-auto px-4 py-8">
+              <main className="max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
                 <div className="flex flex-col lg:flex-row gap-8">
-                  <div className="lg:w-[40%] flex flex-col items-center gap-6">
+                  <motion.div
+                    className="lg:w-[40%] flex flex-col items-center gap-6"
+                    initial={{ opacity: 0, x: -15 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                  >
                     <EmotionChart emotions={result.emotions} />
                     <MoodSummary
                       summary={result.mood.summary}
                       description={result.mood.description}
                     />
-                  </div>
+                  </motion.div>
 
-                  <div className="lg:w-[60%]">
-                    <div className="flex items-baseline justify-between mb-4">
+                  <motion.div
+                    className="lg:w-[60%]"
+                    initial={{ opacity: 0, x: 15 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                  >
+                    <motion.div
+                      className="flex items-baseline justify-between mb-4"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.15, ease: "easeInOut" }}
+                    >
                       <h3 className="text-lg font-semibold text-white">Your Playlist</h3>
-                      <span className="text-xs text-slate-500">
+                      <span className="text-sm text-slate-400">
                         {result.playlist.tracks.length} tracks
                       </span>
-                    </div>
+                    </motion.div>
                     <TrackList tracks={result.playlist.tracks} />
-                  </div>
+                  </motion.div>
                 </div>
               </main>
             </motion.div>

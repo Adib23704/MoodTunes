@@ -4,124 +4,118 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 import type { EmotionChartProps } from "@/types";
 
-const CHART_SIZE = 280;
-const CENTER = CHART_SIZE / 2;
-const MAX_RADIUS = CHART_SIZE / 2 - 40;
-const LABEL_RADIUS = MAX_RADIUS + 24;
 const NUM_EMOTIONS = 8;
+const MIN_BAR_RATIO = 0.12;
 
-function polarToCartesian(angle: number, radius: number): { x: number; y: number } {
-  const rad = ((angle - 90) * Math.PI) / 180;
-  return {
-    x: CENTER + radius * Math.cos(rad),
-    y: CENTER + radius * Math.sin(rad),
-  };
+const EMOTION_COLORS: Record<string, string> = {
+  joy: "#facc15",
+  love: "#f472b6",
+  sadness: "#60a5fa",
+  anger: "#f87171",
+  fear: "#a78bfa",
+  surprise: "#fbbf24",
+  admiration: "#f9a8d4",
+  excitement: "#fb923c",
+  nostalgia: "#d9aa64",
+  optimism: "#a3e635",
+  gratitude: "#86efac",
+  caring: "#c4b5fd",
+  desire: "#ec4899",
+  amusement: "#fde047",
+  curiosity: "#22d3ee",
+  neutral: "#94a3b8",
+  approval: "#a5b4fc",
+  realization: "#67e8f9",
+  annoyance: "#fb7185",
+  disappointment: "#7dd3fc",
+  disapproval: "#f87171",
+  confusion: "#c084fc",
+  embarrassment: "#fca5a5",
+  grief: "#93c5fd",
+  nervousness: "#d8b4fe",
+  pride: "#fbbf24",
+  relief: "#6ee7b7",
+  remorse: "#a5b4fc",
+};
+
+function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function getColor(label: string): string {
+  return EMOTION_COLORS[label] ?? "#8b5cf6";
 }
 
 export default function EmotionChart({ emotions }: EmotionChartProps) {
   const topEmotions = useMemo(() => emotions.slice(0, NUM_EMOTIONS), [emotions]);
-
-  const angleStep = 360 / NUM_EMOTIONS;
-
-  const points = useMemo(() => {
-    return topEmotions.map((emotion, i) => {
-      const angle = i * angleStep;
-      const radius = Math.max(emotion.score * MAX_RADIUS, 10);
-      return polarToCartesian(angle, radius);
-    });
-  }, [topEmotions, angleStep]);
-
-  const polygonPath = useMemo(() => {
-    if (points.length === 0) return "";
-    return `${points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ")} Z`;
-  }, [points]);
-
-  const gridRings = [0.25, 0.5, 0.75, 1.0];
+  const maxScore = useMemo(() => Math.max(...topEmotions.map((e) => e.score), 0.01), [topEmotions]);
 
   return (
-    <div className="flex flex-col items-center">
-      <svg
-        width={CHART_SIZE}
-        height={CHART_SIZE}
-        viewBox={`0 0 ${CHART_SIZE} ${CHART_SIZE}`}
-        className="overflow-visible"
-        aria-label="Emotion radar chart"
-      >
-        {gridRings.map((scale) => (
-          <circle
-            key={scale}
-            cx={CENTER}
-            cy={CENTER}
-            r={MAX_RADIUS * scale}
-            fill="none"
-            stroke="rgba(255,255,255,0.06)"
-            strokeWidth={1}
-          />
-        ))}
-
-        {topEmotions.map((_, i) => {
-          const angle = i * angleStep;
-          const end = polarToCartesian(angle, MAX_RADIUS);
-          return (
-            <line
-              key={`axis-${angle}`}
-              x1={CENTER}
-              y1={CENTER}
-              x2={end.x}
-              y2={end.y}
-              stroke="rgba(255,255,255,0.04)"
-              strokeWidth={1}
-            />
-          );
-        })}
-
-        {polygonPath && (
-          <motion.path
-            d={polygonPath}
-            fill="rgba(139, 92, 246, 0.15)"
-            stroke="rgba(139, 92, 246, 0.6)"
-            strokeWidth={2}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{ transformOrigin: `${CENTER}px ${CENTER}px` }}
-          />
-        )}
-
-        {points.map((point, i) => (
-          <motion.circle
-            key={topEmotions[i].label}
-            cx={point.x}
-            cy={point.y}
-            r={4}
-            fill="#8b5cf6"
-            stroke="#0a0a1a"
-            strokeWidth={2}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3 + i * 0.05, duration: 0.3 }}
-          />
-        ))}
-
+    <div className="w-full max-w-sm">
+      <div className="flex flex-col gap-3">
         {topEmotions.map((emotion, i) => {
-          const angle = i * angleStep;
-          const pos = polarToCartesian(angle, LABEL_RADIUS);
           const pct = Math.round(emotion.score * 100);
+          const normalized = emotion.score / maxScore;
+          const barWidth = MIN_BAR_RATIO + normalized * (1 - MIN_BAR_RATIO);
+          const color = getColor(emotion.label);
+          const isTop = i === 0;
+
           return (
-            <text
-              key={`label-${emotion.label}`}
-              x={pos.x}
-              y={pos.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="text-[10px] fill-slate-400"
+            <motion.div
+              key={emotion.label}
+              className="flex items-center gap-3"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 + i * 0.06, duration: 0.4, ease: "easeOut" }}
             >
-              {emotion.label}
-              <tspan className="fill-slate-500 text-[9px]"> {pct}%</tspan>
-            </text>
+              <span
+                className={`w-24 text-right shrink-0 ${
+                  isTop ? "text-sm font-semibold" : "text-sm"
+                }`}
+                style={{ color: isTop ? color : "#cbd5e1" }}
+              >
+                {capitalize(emotion.label)}
+              </span>
+
+              <div className="flex-1 h-8 rounded-full bg-white/3 overflow-hidden relative">
+                <motion.div
+                  className="h-full rounded-full relative overflow-hidden"
+                  style={{
+                    background: `linear-gradient(90deg, ${color}33 0%, ${color} 100%)`,
+                    boxShadow: isTop ? `0 0 20px ${color}40` : "none",
+                  }}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${barWidth * 100}%` }}
+                  transition={{
+                    delay: 0.2 + i * 0.06,
+                    duration: 0.7,
+                    ease: "easeOut",
+                  }}
+                >
+                  {isTop && (
+                    <div
+                      className="absolute inset-0 shimmer-overlay"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%)",
+                      }}
+                    />
+                  )}
+                </motion.div>
+              </div>
+
+              <span
+                className={`w-10 text-right tabular-nums ${
+                  isTop ? "text-sm font-semibold" : "text-sm"
+                }`}
+                style={{ color: isTop ? color : "#94a3b8" }}
+              >
+                {pct}%
+              </span>
+            </motion.div>
           );
         })}
-      </svg>
+      </div>
     </div>
   );
 }

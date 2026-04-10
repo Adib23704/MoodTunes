@@ -64,12 +64,28 @@ export default function SmartPrompts({ onSelect, disabled }: SmartPromptsProps) 
 
   return (
     <div className="flex flex-wrap justify-center gap-2">
-      {prompts.map((prompt) => (
+      {prompts.map((prompt, index) => (
         <motion.button
           key={prompt}
           onClick={() => onSelect(prompt)}
           disabled={disabled}
           className="px-4 py-2 text-sm rounded-full glass glass-hover text-violet-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: [1, 1.02, 1],
+          }}
+          transition={{
+            opacity: { delay: 0.5 + index * 0.08, duration: 0.4, ease: "easeInOut" },
+            y: { delay: 0.5 + index * 0.08, duration: 0.4, ease: "easeInOut" },
+            scale: {
+              delay: 1 + index * 0.6,
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+          }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

@@ -34,13 +34,13 @@ export default function RecentMoods({ onSelect, disabled }: RecentMoodsProps) {
 
   return (
     <div className="flex flex-wrap justify-center gap-2">
-      <span className="text-xs text-slate-500 self-center mr-1">Recent:</span>
+      <span className="text-xs text-slate-400 self-center mr-1">Recent:</span>
       {moods.map((mood) => (
         <motion.button
           key={mood}
           onClick={() => onSelect(mood)}
           disabled={disabled}
-          className="px-3 py-1.5 text-xs rounded-full border border-white/6 text-slate-400 hover:text-violet-300 hover:border-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="px-3 py-1.5 text-sm rounded-full border border-white/6 text-slate-400 hover:text-violet-300 hover:border-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

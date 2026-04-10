@@ -104,11 +104,30 @@ export default function MoodInput({
   return (
     <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-8">
       <div className="text-center">
-        <h1 className="text-5xl sm:text-6xl font-bold text-white tracking-tight mb-3">MoodTunes</h1>
-        <p className="text-slate-400 text-lg">How are you feeling?</p>
+        <motion.h1
+          className="text-5xl sm:text-6xl font-bold text-white tracking-tight mb-3"
+          animate={{ y: [0, -3, 0, 3, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          MoodTunes
+        </motion.h1>
+        <motion.p
+          className="text-slate-300 text-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5, ease: "easeInOut" }}
+        >
+          How are you feeling?
+        </motion.p>
       </div>
 
-      <form onSubmit={handleSubmit} className="w-full">
+      <motion.form
+        onSubmit={handleSubmit}
+        className="w-full"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5, ease: "easeInOut" }}
+      >
         <div className="relative">
           <textarea
             value={moodText}
@@ -159,7 +178,7 @@ export default function MoodInput({
             </motion.span>
           </motion.div>
         )}
-      </form>
+      </motion.form>
 
       <SmartPrompts onSelect={handlePromptSelect} disabled={isLoading} />
       <RecentMoods onSelect={handlePromptSelect} disabled={isLoading} />

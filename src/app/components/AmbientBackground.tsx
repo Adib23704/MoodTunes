@@ -38,10 +38,8 @@ export default function AmbientBackground({ emotions }: AmbientBackgroundProps) 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       <motion.div
-        className="absolute rounded-full blur-[100px]"
+        className="absolute rounded-full blur-[100px] w-70 h-70 sm:w-100 sm:h-100 lg:w-125 lg:h-125"
         style={{
-          width: 500,
-          height: 500,
           top: "10%",
           left: "15%",
           background: `radial-gradient(circle, ${colors[0]} 0%, transparent 70%)`,
@@ -49,14 +47,17 @@ export default function AmbientBackground({ emotions }: AmbientBackgroundProps) 
         animate={{
           x: [0, 30, -20, 0],
           y: [0, -25, 15, 0],
+          scale: [0.95, 1.05, 0.95],
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        transition={{
+          x: { duration: 20, repeat: Infinity, ease: "easeInOut" },
+          y: { duration: 20, repeat: Infinity, ease: "easeInOut" },
+          scale: { duration: 12, repeat: Infinity, ease: "easeInOut" },
+        }}
       />
       <motion.div
-        className="absolute rounded-full blur-[100px]"
+        className="absolute rounded-full blur-[100px] w-55 h-55 sm:w-[320px] sm:h-80 lg:w-100 lg:h-100"
         style={{
-          width: 400,
-          height: 400,
           bottom: "15%",
           right: "10%",
           background: `radial-gradient(circle, ${colors[1] ?? colors[0]} 0%, transparent 70%)`,
@@ -64,14 +65,17 @@ export default function AmbientBackground({ emotions }: AmbientBackgroundProps) 
         animate={{
           x: [0, -25, 20, 0],
           y: [0, 20, -30, 0],
+          scale: [1.05, 0.95, 1.05],
         }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+        transition={{
+          x: { duration: 25, repeat: Infinity, ease: "easeInOut" },
+          y: { duration: 25, repeat: Infinity, ease: "easeInOut" },
+          scale: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+        }}
       />
       <motion.div
-        className="absolute rounded-full blur-[100px]"
+        className="absolute rounded-full blur-[100px] w-45 h-45 sm:w-60 sm:h-60 lg:w-75 lg:h-75"
         style={{
-          width: 300,
-          height: 300,
           top: "50%",
           left: "60%",
           background: `radial-gradient(circle, ${colors[2] ?? colors[0]} 0%, transparent 70%)`,
@@ -79,8 +83,13 @@ export default function AmbientBackground({ emotions }: AmbientBackgroundProps) 
         animate={{
           x: [0, 20, -15, 0],
           y: [0, -20, 25, 0],
+          scale: [0.95, 1.05, 0.95],
         }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        transition={{
+          x: { duration: 18, repeat: Infinity, ease: "easeInOut" },
+          y: { duration: 18, repeat: Infinity, ease: "easeInOut" },
+          scale: { duration: 10, repeat: Infinity, ease: "easeInOut" },
+        }}
       />
     </div>
   );
