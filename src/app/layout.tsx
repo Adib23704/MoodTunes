@@ -1,31 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "MoodTunes - AI-Powered Music for Every Mood",
   description:
-    "Discover personalized music playlists based on your current mood using AI-powered sentiment analysis and Spotify integration. Generate the perfect soundtrack for any feeling.",
+    "Discover personalized music playlists based on your current mood using AI-powered emotion analysis and Spotify integration.",
   keywords:
-    "mood music, AI playlist generator, Spotify integration, music recommendation, sentiment analysis, personalized playlists, mood-based music, music discovery, emotional music, AI music",
+    "mood music, AI playlist generator, Spotify integration, music recommendation, emotion analysis, personalized playlists",
   authors: [{ name: "Adib23704", url: "https://adibdev.me" }],
   creator: "Adib23704",
   publisher: "MoodTunes",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
+  formatDetection: { email: false, address: false, telephone: false },
   metadataBase: new URL("https://moodtunes.adibdev.me"),
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
   openGraph: {
     title: "MoodTunes - AI-Powered Music for Every Mood",
     description:
-      "Discover personalized music playlists based on your current mood using AI-powered sentiment analysis and Spotify integration. Generate the perfect soundtrack for any feeling.",
+      "Discover personalized music playlists based on your current mood using AI-powered emotion analysis and Spotify integration.",
     url: "https://moodtunes.adibdev.me",
     siteName: "MoodTunes",
     images: [
@@ -43,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MoodTunes - AI-Powered Music for Every Mood",
     description:
-      "Discover personalized music playlists based on your current mood using AI-powered sentiment analysis and Spotify integration. Generate the perfect soundtrack for any feeling.",
+      "Discover personalized music playlists based on your current mood using AI-powered emotion analysis and Spotify integration.",
     images: ["/images/cover-image.jpg"],
     creator: "@adib2374",
   },
@@ -62,43 +56,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="theme-color" content="#8b5cf6" />
+        <meta name="theme-color" content="#0a0a1a" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="MoodTunes" />
 
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-
-        <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png" />
-        <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png" />
-        <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png" />
-
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/favicon/android-icon-192x192.png"
-        />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-
         <link rel="manifest" href="/favicon/manifest.json" />
-
-        <meta name="msapplication-TileColor" content="#8b5cf6" />
-        <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
-        <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
 
         <link rel="preconnect" href="https://api.spotify.com" />
         <link rel="preconnect" href="https://accounts.spotify.com" />
@@ -112,35 +82,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "@type": "WebApplication",
               name: "MoodTunes",
               description:
-                "Discover personalized music playlists based on your current mood using AI-powered sentiment analysis and Spotify integration.",
+                "AI-powered music discovery based on your emotional state.",
               url: "https://moodtunes.adibdev.me",
               applicationCategory: "MultimediaApplication",
               operatingSystem: "Web Browser",
-              offers: {
-                "@type": "Offer",
-                price: "0",
-                priceCurrency: "USD",
-              },
-              creator: {
-                "@type": "Person",
-                name: "Adib",
-                url: "https://adibdev.me",
-              },
-              featureList: [
-                "AI-powered mood analysis",
-                "Spotify integration",
-                "Personalized playlists",
-                "Voice input support",
-                "Real-time music recommendations",
-                "User-friendly interface",
-                "Cross-platform compatibility",
-                "Open-source codebase",
-              ],
+              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+              creator: { "@type": "Person", name: "Adib", url: "https://adibdev.me" },
             }),
           }}
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={spaceGrotesk.className}>{children}</body>
     </html>
   );
 }

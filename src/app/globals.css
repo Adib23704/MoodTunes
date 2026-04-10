@@ -6,147 +6,39 @@
   }
 
   body {
-    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    background-color: #0a0a1a;
+    color: #e2e8f0;
   }
 }
 
-.gradient-text {
-  background-image: linear-gradient(to right, #9333ea, #db2777);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.glass-effect {
-  background-color: rgb(255 255 255 / 0.2);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgb(255 255 255 / 0.3);
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-.mood-card {
-  background-color: rgb(255 255 255 / 0.8);
-  backdrop-filter: blur(4px);
-  border-radius: 0.75rem;
-  box-shadow:
-    0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
-  border: 1px solid rgb(255 255 255 / 0.2);
-  transition: all 0.3s;
-}
-
-.mood-card:hover {
-  box-shadow:
-    0 20px 25px -5px rgb(0 0 0 / 0.1),
-    0 8px 10px -6px rgb(0 0 0 / 0.1);
-  transform: scale(1.02);
-}
-
-.mood-button {
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  font-weight: 500;
-  transition: all 0.2s;
-  transform: scale(1);
-  box-shadow:
-    0 4px 6px -1px rgb(0 0 0 / 0.1),
-    0 2px 4px -2px rgb(0 0 0 / 0.1);
-}
-
-.mood-button:hover {
-  transform: scale(1.05);
-  box-shadow:
-    0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-
-.mood-button:active {
-  transform: scale(0.95);
-}
-
-.track-item {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid rgb(243 244 246);
-  transition: all 0.2s;
-}
-
-.track-item:hover {
-  background-color: rgb(249 250 251);
-}
-
-.track-item:last-child {
-  border-bottom: 0;
-}
-
-/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #8b5cf6, #ec4899);
-  border-radius: 4px;
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #7c3aed, #db2777);
+  background: rgba(139, 92, 246, 0.5);
 }
 
-/* Loading animations */
-@keyframes pulse-glow {
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
-  }
-}
-
-.pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.float-animation {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Mobile optimizations */
-@media (max-width: 768px) {
-  .track-item {
-    padding: 0.75rem;
-  }
-
-  .mood-card {
-    padding: 1rem;
-  }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .glass-effect {
-    background-color: rgb(17 24 39 / 0.2);
-    border-color: rgb(55 65 81 / 0.3);
-  }
-}
-
-/* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -155,10 +47,10 @@
   }
 }
 
-/* Focus styles for keyboard navigation */
 button:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid #9333ea;
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid #8b5cf6;
   outline-offset: 2px;
 }

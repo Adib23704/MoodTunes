@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 text-white py-12 relative overflow-hidden">
+    <header className="bg-linear-to-r from-purple-600 via-pink-600 to-indigo-600 text-white py-12 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
         <motion.div
@@ -72,7 +72,7 @@ export default function Header() {
               loading="eager"
             />
           </motion.div>
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold bg-linear-to-r from-white to-purple-200 bg-clip-text text-transparent">
             MoodTunes
           </h1>
         </motion.div>

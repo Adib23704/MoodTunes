@@ -61,3 +61,34 @@ export interface MoodInputProps {
   onMoodSubmit: (text: string) => Promise<void>;
   isLoading: boolean;
 }
+
+export interface EmotionChartProps {
+  emotions: EmotionScore[];
+}
+
+export interface MoodSummaryProps {
+  summary: string;
+  description: string;
+}
+
+export interface TrackListProps {
+  tracks: SpotifyTrack[];
+}
+
+export interface SmartPromptsProps {
+  onSelect: (text: string) => void;
+  disabled: boolean;
+}
+
+export interface RecentMoodsProps {
+  onSelect: (text: string) => void;
+  disabled: boolean;
+}
+
+export interface LoadingStateProps {
+  message?: string;
+}
+
+export interface AmbientBackgroundProps {
+  emotions: EmotionScore[];
+}
