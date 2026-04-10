@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Music, Headphones, Heart } from 'lucide-react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { motion } from "framer-motion";
+import { Headphones, Heart, Music } from "lucide-react";
+import Image from "next/image";
 
 export default function Header() {
   return (
@@ -11,27 +11,27 @@ export default function Header() {
       <div className="absolute inset-0 opacity-10">
         <motion.div
           className="absolute top-10 left-10 w-20 h-20"
-          animate={{ 
+          animate={{
             rotate: 360,
-            scale: [1, 1.2, 1]
+            scale: [1, 1.2, 1],
           }}
-          transition={{ 
+          transition={{
             rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-            scale: { duration: 4, repeat: Infinity }
+            scale: { duration: 4, repeat: Infinity },
           }}
         >
           <Music className="w-full h-full" />
         </motion.div>
-        
+
         <motion.div
           className="absolute top-20 right-20 w-16 h-16"
-          animate={{ 
+          animate={{
             rotate: -360,
-            y: [0, -20, 0]
+            y: [0, -20, 0],
           }}
-          transition={{ 
+          transition={{
             rotate: { duration: 15, repeat: Infinity, ease: "linear" },
-            y: { duration: 3, repeat: Infinity }
+            y: { duration: 3, repeat: Infinity },
           }}
         >
           <Headphones className="w-full h-full" />
@@ -39,13 +39,13 @@ export default function Header() {
 
         <motion.div
           className="absolute bottom-10 left-1/3 w-12 h-12"
-          animate={{ 
+          animate={{
             scale: [1, 1.5, 1],
-            opacity: [0.3, 0.8, 0.3]
+            opacity: [0.3, 0.8, 0.3],
           }}
-          transition={{ 
+          transition={{
             duration: 2,
-            repeat: Infinity
+            repeat: Infinity,
           }}
         >
           <Heart className="w-full h-full" />
@@ -63,13 +63,20 @@ export default function Header() {
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <Image src="/logo.png" alt="MoodTunes Logo" width={64} height={64} className="mr-4" />
+            <Image
+              src="/logo.png"
+              alt="MoodTunes Logo"
+              width={64}
+              height={64}
+              className="mr-4"
+              loading="eager"
+            />
           </motion.div>
           <h1 className="text-5xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
             MoodTunes
           </h1>
         </motion.div>
-        
+
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -78,7 +85,7 @@ export default function Header() {
         >
           Discover music that matches your mood
         </motion.p>
-        
+
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}

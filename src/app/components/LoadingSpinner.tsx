@@ -1,55 +1,41 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { motion } from "framer-motion";
+import Image from "next/image";
+import type { LoadingSpinnerProps } from "@/types";
 
-export default function LoadingSpinner({ message = "Loading..." }) {
+export default function LoadingSpinner({ message = "Loading..." }: LoadingSpinnerProps) {
   return (
     <div className="flex flex-col items-center justify-center py-16">
-      {/* Logo with Spinner */}
       <div className="relative w-32 h-32 mb-8">
         <motion.div
           className="absolute inset-0 border-4 border-purple-200 border-t-purple-600 rounded-full"
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         />
-
         <motion.div
-          className="absolute inset-2 border-3 border-pink-200 border-b-pink-600 rounded-full"
+          className="absolute inset-2 border-[3px] border-pink-200 border-b-pink-600 rounded-full"
           animate={{ rotate: -360 }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
         />
-
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
           animate={{
             scale: [1, 1.1, 1],
-            opacity: [0.8, 1, 0.8]
+            opacity: [0.8, 1, 0.8],
           }}
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
           <div className="w-16 h-16 relative">
-            <Image
-              src="/logo.png"
-              alt="MoodTunes Logo"
-              fill
-              className="object-contain"
-              priority
-            />
+            <Image src="/logo.png" alt="MoodTunes Logo" fill className="object-contain" priority />
           </div>
         </motion.div>
       </div>
-
-      {/* Loading Text */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="text-center"
-      >
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center">
         <motion.p
           className="text-xl font-semibold text-gray-700 mb-2"
           animate={{ opacity: [0.5, 1, 0.5] }}
@@ -57,7 +43,6 @@ export default function LoadingSpinner({ message = "Loading..." }) {
         >
           {message}
         </motion.p>
-
         <motion.div
           className="flex justify-center gap-1"
           initial={{ opacity: 0 }}
@@ -72,7 +57,7 @@ export default function LoadingSpinner({ message = "Loading..." }) {
               transition={{
                 duration: 0.8,
                 repeat: Infinity,
-                delay: i * 0.2
+                delay: i * 0.2,
               }}
             />
           ))}

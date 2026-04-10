@@ -1,37 +1,82 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
   }
 }
 
-@layer components {
-  .gradient-text {
-    @apply bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent;
-  }
-  
-  .glass-effect {
-    @apply bg-white bg-opacity-20 backdrop-blur-lg border border-white border-opacity-30;
-  }
+.gradient-text {
+  background-image: linear-gradient(to right, #9333ea, #db2777);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
-  .mood-card {
-    @apply bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
-  }
+.glass-effect {
+  background-color: rgb(255 255 255 / 0.2);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgb(255 255 255 / 0.3);
+}
 
-  .mood-button {
-    @apply px-6 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg;
-  }
+.mood-card {
+  background-color: rgb(255 255 255 / 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  transition: all 0.3s;
+}
 
-  .track-item {
-    @apply flex items-center p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 group transition-all duration-200;
-  }
+.mood-card:hover {
+  box-shadow:
+    0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transform: scale(1.02);
+}
+
+.mood-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  transform: scale(1);
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.mood-button:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.mood-button:active {
+  transform: scale(0.95);
+}
+
+.track-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgb(243 244 246);
+  transition: all 0.2s;
+}
+
+.track-item:hover {
+  background-color: rgb(249 250 251);
+}
+
+.track-item:last-child {
+  border-bottom: 0;
 }
 
 /* Custom scrollbar */
@@ -55,7 +100,8 @@
 
 /* Loading animations */
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
   }
   50% {
@@ -68,7 +114,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -83,18 +130,19 @@
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .track-item {
-    @apply p-3;
+    padding: 0.75rem;
   }
-  
+
   .mood-card {
-    @apply p-4;
+    padding: 1rem;
   }
 }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .glass-effect {
-    @apply bg-gray-900 bg-opacity-20 border-gray-700 border-opacity-30;
+    background-color: rgb(17 24 39 / 0.2);
+    border-color: rgb(55 65 81 / 0.3);
   }
 }
 
@@ -111,5 +159,6 @@
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  @apply outline-2 outline-purple-600 outline-offset-2;
+  outline: 2px solid #9333ea;
+  outline-offset: 2px;
 }
