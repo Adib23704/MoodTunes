@@ -104,13 +104,9 @@ export default function MoodInput({
   return (
     <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-8">
       <div className="text-center">
-        <motion.h1
-          className="text-5xl sm:text-6xl font-bold text-white tracking-tight mb-3"
-          animate={{ y: [0, -3, 0, 3, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <h1 className="brand-float text-5xl sm:text-6xl font-bold text-white tracking-tight mb-3">
           MoodTunes
-        </motion.h1>
+        </h1>
         <motion.p
           className="text-slate-300 text-lg"
           initial={{ opacity: 0 }}

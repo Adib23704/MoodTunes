@@ -71,7 +71,7 @@ export function generateFallbackResult(emotions: EmotionScore[]): LlmMoodResult 
 
   const summary = EMOTION_TO_SUMMARY[topEmotion] ?? "Mixed Feelings";
   const description = secondEmotion
-    ? `A blend of ${topEmotion} and ${secondEmotion} — music to match your complex mood.`
+    ? `A blend of ${topEmotion} and ${secondEmotion} - music to match your complex mood.`
     : `Music curated for your ${topEmotion} mood.`;
 
   return { summary, queries, description };
